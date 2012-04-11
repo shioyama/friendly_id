@@ -44,6 +44,7 @@ module FriendlyId
           add_column :journalists, "slug_en", :string
           add_column :journalists, "slug_es", :string
           add_column :journalists, "slug_de", :string
+          add_column :journalists, "slug_ja", :string
 
           @done = true
         end

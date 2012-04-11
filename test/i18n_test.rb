@@ -1,3 +1,4 @@
+# encoding: utf-8
 require "helper"
 
 class I18nTest < MiniTest::Unit::TestCase
@@ -54,6 +55,18 @@ class I18nTest < MiniTest::Unit::TestCase
       assert_equal "juan-fulano", journalist.slug_es
       I18n.with_locale(:es) do
         assert_equal "juan-fulano", journalist.to_param
+      end
+    end
+  end
+
+  test "friendly_id should handle UTF-8 slugs" do
+    transaction do
+      journalist = Journalist.create!(:name => "John Smith")
+      journalist.set_friendly_id("ジョン・スミス", :ja)
+      journalist.save!
+      assert !journalist.slug_ja.empty?
+      I18n.with_locale(:ja) do
+        assert !journalist.to_param.empty?
       end
     end
   end
